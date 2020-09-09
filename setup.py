@@ -23,7 +23,7 @@ def find_requirements():
 
 
 def find_version():
-    with open(project_path / 'git_talk' / '__init__.py', 'r+',
+    with open(project_path  /  '__init__.py', 'r+',
               encoding='utf-8') as version_file:
         pattern = '^__version__ = [\'\"]([^\'\"]*)[\'\"]'
         match = re.search(pattern, version_file.readline().strip())
@@ -39,14 +39,14 @@ def find_version():
 
     
 setuptools.setup(
-    name='git-talk',
+    name='gtalk',
     version=find_version(),
-    description='Use git-talk to manage your daily task '
+    description='Use gtalk to manage your daily task '
                 '- by interactive CLI',
     long_description=find_readme(),
     long_description_content_type='text/markdown',
-    url='https://github.com/cove9988/git-talk',
-    author='Paulg',
+    url='https://github.com/cove9988/gtalk',
+    author='Paul Guo',
     author_email='cove9988@gmail.com',
     license='MIT',
     keywords='manage all git reposities on one place with interactive command line',
@@ -57,7 +57,7 @@ setuptools.setup(
     },
     install_requires=find_requirements(),
     python_requires='>=3.6',
-    entry_points={'console_scripts': ['git-talk=git_talk.cmd:main']},
+    entry_points={'console_scripts': ['gtalk=git_talk.cmd:main']},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
