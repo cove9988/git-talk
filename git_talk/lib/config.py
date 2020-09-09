@@ -1,7 +1,19 @@
-
 import os
 import configparser
 import shutil
+import json
+
+
+# cc = lib.config.conf('.git_talk.ini')
+
+# m = cc.value('repo_json','git-talk')
+# mm = json.loads(m)
+# mm["jira-link"] = "test"
+# mm["version"] = "1.0.1"
+# mmm = json.dumps(mm)
+# cc.save('repo_json','git-talk',mmm)
+
+
 class conf():
     def __init__(self, ini_file):
         f = os.path.abspath('./git_talk/' + ini_file)
@@ -26,3 +38,12 @@ class conf():
 
     def options(self, section):
         return self.cfg[section]
+    
+    def value_json(self, section,option):
+        return json.loads(self.value(section,option))
+
+    def save_json(self, section,option,value_json):
+        self.save(section,option,json.dumps(value_json))
+    
+    def values_json(self,section):
+        return [{x:json.loads(y)} for x, y in self.cfg[section].items()]

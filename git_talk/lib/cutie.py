@@ -14,6 +14,7 @@ from typing import List, Optional
 from colorama import init
 import readchar
 import os, sys
+from getpass import getpass
 
 if sys.platform.lower() == "win32":
     os.system('color')
@@ -96,12 +97,21 @@ def color_print(color, message):
 def get_exit(value= '', ex = False, message = ''):
     if value.strip().upper() == 'EXIT':
         if ex:
-            print('Bye! ', message)
+            color_print('MAGENTA', 'Bye! ' + message)
             return True
         else:
             return True
     else:
         return False
+def get_pass(prompt: str):
+    return_value=None
+    while return_value is None:
+        return_value = getpass(prompt + '\n')
+        if return_value is not None:
+            break
+
+    print('\033[K', end='')
+    return return_value
 
 def get_input(prompt: str) :
     return_value=None
@@ -424,4 +434,26 @@ def prompt_yes_or_no(
     print('\033[K\n\033[K\n\033[K\n\033[3A')
     return is_selected and is_yes
 
-    
+def prompt_yn(message):
+    #message = '\n' + message
+    return prompt_yes_or_no(message)
+
+
+def select_propmt(message, names, captions=[]):
+    cprint('alert', ('\n' + message))
+    captions = []
+    # List of names to select from, including some captions
+    # Names which are captions and thus not selectable
+    # captions = [0, 2, 7]
+    # Get the name
+    exit = 'Exit'
+    if exit not in names:
+        names.append(exit)
+    name = names[select(
+        names, caption_indices=captions, selected_index=len(names)-1)]
+
+    return name if name else exit
+
+def linux_path(path):
+    return path.replace("\\", "/")
+

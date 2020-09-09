@@ -1,47 +1,65 @@
 import subprocess
 import os
+import git_talk.lib.cutie as cutie
+import git_talk.lib.bcolors as bcolors
+
+bcolors = bcolors.bcolors()
+
 lbr = 'refs/heads/'
 rbr = 'refs/remotes/'
 tr = 'refs/tags/'
 
-
 def execute_git_command(local_path, command):
-    p = os.path.join(local_path,'/.git')
+    p = os.path.join(local_path, '/.git')
     if os.path.isdir(p):
-        print('Not a git repository')
+        cutie.color_print('RED','Not a git repository')
         return []
     bash_command = 'git -C ' + str(local_path) + ' ' + command
-    print(bash_command)
+    # cutie.color_print('YELLOW',bash_command)
     try:
         output = subprocess.run(bash_command.split(), stdout=subprocess.PIPE)
     except subprocess.CalledProcessError:
-        print('Not a git command')
+        cutie.color_print('RED','Not a git command')
         return []
     else:
         result = output.stdout.decode('utf-8').splitlines()
         return result
 
-def subprocess_cmd(path, command):
-    result =[]
+
+def subprocess_cmd(local_path, command, display=True):
+    result = []
     wd = os.getcwd()
-    os.chdir(path)
+    os.chdir(local_path)
+    error = 0
     #commands = command.split(";")
-    for c in command:
-        #print(c)
-        try:
-            output = subprocess.run(c, stdout=subprocess.PIPE,shell=True)
-        except subprocess.CalledProcessError:
-            print('Not a git command')
-
-        else:
-            result.append(output.stdout.decode('utf-8').splitlines())
-
+    for n, c in enumerate(command):
+        if display:
+            cmd = '-cmd-{0}->'.format(n) + ' '.join(c) 
+            cutie.color_print('YELLOW', cmd)
+        output = subprocess.Popen(
+            c, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        out, err = output.communicate()
+        out, err = out.decode("utf-8"), err.decode("utf-8")
+        if err:
+            if 'error:' in err or 'fatal:' in err:
+                #if display:
+                ee = '-ERR->' + err
+                cutie.color_print('RED', ee)
+                error = 1
+                break
+            else:
+                if display:
+                    cutie.color_print('GREEN', '-INF->' + err)
+        if out:
+            if display:
+                cutie.color_print('GREEN', '-OUT->' + out)
+            result.append(out)
     os.chdir(wd)
-    return result
+
+    return result, error
 
 def read_git_file(local_path, sha1_file):
     return execute_git_command(local_path, 'cat-file -p ' + sha1_file)
-
 
 def get_git_objects(local_path):
     objects = [line.split() for line in execute_git_command(

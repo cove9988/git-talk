@@ -40,7 +40,7 @@ class GitHubAPI():
     def list_branches(self):
         return list(self.repo.get_branches())
     
-    def create_story(self,title,body):
+    def create_story(self,title, body=None, assignee=None, milestone=None, labels=None):
         #title format: jira number --- title
         if title != '' and body != '':
             try:
