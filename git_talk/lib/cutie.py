@@ -95,7 +95,7 @@ def color_print(color, message):
         print(style.RESET(message))        
 
 def get_exit(value= '', ex = False, message = ''):
-    if value.strip().upper() == 'EXIT':
+    if value.strip().lower() in ('exit','cancel'):
         if ex:
             color_print('MAGENTA', 'Bye! ' + message)
             return True
@@ -439,14 +439,14 @@ def prompt_yn(message):
     return prompt_yes_or_no(message)
 
 
-def select_propmt(message, names, captions=[]):
+def select_propmt(message, names, exit = 'Cancel', captions=[]):
     cprint('alert', ('\n' + message))
     captions = []
     # List of names to select from, including some captions
     # Names which are captions and thus not selectable
     # captions = [0, 2, 7]
     # Get the name
-    exit = 'Exit'
+    
     if exit not in names:
         names.append(exit)
     name = names[select(

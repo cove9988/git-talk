@@ -11,7 +11,7 @@
 {{- macros.section('Performance improvements', release.performance_improvements) -}}
 {{- macros.section('Refactorings', release.refactorings) -}}
 {{- macros.section('Docs', release.docs) -}}
-{{- macros.section('Others', release.builds+release.ci+release.chore+release.reverts+release.style_changes+release.tests) -}}
+{{- macros.section('Others', release.others+release.builds+release.ci+release.chore+release.reverts+release.style_changes+release.tests) -}}
 {% if release.diff_url %}
 Full set of changes: [`{{release.previous_tag}}...{{release.tag}}`]({{release.diff_url}})
 {% endif -%}

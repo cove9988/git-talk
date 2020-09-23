@@ -215,6 +215,7 @@ class GitRepository(RepositoryInterface):
         else:
             locallogger = logging.getLogger("repository._parse_conventional_commit")
             locallogger.debug("Commit message did not match expected pattern: {}".format(message))
+            type_, scope, description, body_footer = 'Others', '', message, ''
         if scope:
             scope = scope[1:-1]
         if body_footer:

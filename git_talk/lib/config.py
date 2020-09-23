@@ -22,6 +22,7 @@ class conf():
             print('copy file to: ', con_file, ' from: ', f)
             shutil.copyfile(f, con_file)
         self.ini_file = con_file
+        print(con_file)
         self.cfg = configparser.ConfigParser()
         self.cfg.read(self.ini_file)
 

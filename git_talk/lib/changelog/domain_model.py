@@ -10,19 +10,20 @@ default_tag_pattern = "(?P<version>((?P<major>0|[1-9]\d*)\.(?P<minor>0|[1-9]\d*)
 
 
 class ChangeType(Enum):
-    BUILD = "build"
-    CI = "ci"
+    #New Features,Fixes,Performance improvements,Refactorings,Docs,Others
+    BUILD = "Build"
+    CI = "CI"
+    OTHERS = "Others"
     CHORE = "chore"
-    DOCS = "docs"
-    FEAT = "feat"
-    FIX = "fix"
-    PERF = "perf"
-    REFACTOR = "refactor"
+    DOCS = "Docs"
+    FEAT = "New Features"
+    FIX = "Fixes"
+    PERF = "Performance improvements"
+    REFACTOR = "Refactorings"
     REVERT = "revert"
     STYLE = "style"
     TEST = "test"
-
-
+    
 class Note:
     def __init__(
         self,
@@ -64,6 +65,10 @@ class Release(Note):
     @property
     def builds(self):
         return self._notes_with_type(ChangeType.BUILD)
+    
+    @property
+    def others(self):
+        return self._notes_with_type(ChangeType.OTHERS)
 
     @property
     def ci(self):
@@ -108,6 +113,10 @@ class Release(Note):
     @property
     def has_builds(self):
         return self._has(ChangeType.BUILD)
+
+    @property
+    def has_others(self):
+        return self._has(ChangeType.OTHERS)
 
     @property
     def has_ci(self):
