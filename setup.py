@@ -39,17 +39,16 @@ def find_version():
 
     
 setuptools.setup(
-    name='gtalk',
+    name='git-talk',
     version=find_version(),
-    description='Use gtalk to manage your daily task '
-                '- by interactive CLI',
+    description='Use git-talk to manage your daily git chore with interactive CLI',
     long_description=find_readme(),
     long_description_content_type='text/markdown',
-    url='https://github.com/cove9988/gtalk',
+    url='https://github.com/cove9988/git-talk',
     author='Paul Guo',
     author_email='cove9988@gmail.com',
     license='MIT',
-    keywords='manage all git reposities on one place with interactive command line',
+    keywords='git CLI, git daily chore, dialog style CLI, mulitiply repositories',
     packages=setuptools.find_packages(),
     include_package_data=True,
     package_data ={
@@ -57,7 +56,7 @@ setuptools.setup(
     },
     install_requires=find_requirements(),
     python_requires='>=3.6',
-    entry_points={'console_scripts': ['gtalk=git_talk.cmd:main']},
+    entry_points={'console_scripts': ['git-talk=cmd:main']},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

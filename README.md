@@ -1,132 +1,58 @@
 # git-talk
-### It's a easy way to manage your daily git related works in an interactive way. You can manage mulitple repositories in one place by using command line
-- 1. clone new repository to you local
-- 2. checkout, create, or delete a branch
-- 3. commit your works at local and remote
-- 4. create PR 
-- 5. create, assign and complete an issue (feature) with auto linked branch
-- 6. rebase easily
 
-Very good and easy understanding reference here:
-https://www.atlassian.com/git/tutorials/making-a-pull-request
+git-talk CLI is a dialog sytle commandline git tool, which help you handle most your daily git chore without any git comand typing.
+1. It manages mulitiply git reporisities in one place. reduces context switching and helps you focus.
+2. git-talk uses git work flow. 
+        All the task branch is created from branch dev.
+        Use tag based release in master with auto build change log (changelog.md)
+        All commit with pre-build category: **New Features,Fixes,Performance improvements,Refactorings,Docs,Others** 
 
-Key bindings .
+## Add New Repository:
+1. Have remote repo url
+2. Create repo local with a few configuration
+3. Work flow requires only work on task/hotfix branches, you can not commit directly to master and dev branches. 
+![Create New REpository](./git_talk/doc/createnewrepo.gif)
 
-| Key          | Mode   | Description |
-| ------------ | ------ | ----------- |
-|  Up          | All    | Move selection up |
-|  Down        | All    | Move selection down |
-|  Page Up     | All    | Move selection up five lines |
-|  Page Down   | All    | Move selection down five lines |
-|  Space       | All    | Multi selection |
-|  Enter       | All    | Confirmation |
+## Swith to a different repository (project)
+1. You can manage multiply repositories in one place without context switch.  
+![Switch](./git_talk/doc/switchrepo.gif) 
 
-## issues
-- [ ] git rebase
-- [ ] git story (issue)
+## Commit your changes
+1. Commit changes at task branch
+2. Change Type Defined.
+![Switch](./git_talk/doc/commit.gif) 
 
-## Install
+## Create a PR
+1. Pick a completed task branch
+2. Create a PR to dev branch
+![Switch](./git_talk/doc/pr.gif) 
 
-#### From GitHub
-To install git-talk from GitHub:
-1. You first need to install [git]() and check that the dot binary is correctly set in you system's path.  
-2. Then run:
-    ```
-    git clone https://github.com.au/cove9988/git-talk
-    ```
-3. Finally, inside the newly created git-talk folder, run (with Python 3 and setuptools):
-    ```
-    python setup.py install
-    ```
+## Create a Release Tag and Change Log
+1. Once PR reviewed and merged
+2. Create a release tag and the changelog will auto generated as well.
 
-## Run
+![Switch](./git_talk/doc/tag.gif) 
+![Switch](./git_talk/doc/tag_web.gif) 
 
-#### As a Git plugin
-git-talk is a Git plugin that is run from a Git repository with the command:
-```
-git talk
-```
+## Rebase
+1. Rebase from master to dev
+2. re-sync all branches from remote and local.
 
+![Switch](./git_talk/doc/rebase.gif) 
 
-## Functions
-### commit your work
-    (including git pull, git add/rm, git commit -m, git push)
+## Branch
+1. switch branch, create a new task branch
+2. Remove merged or unused branch from both local and remote
 
-#### pull
-    git pull has two problems:
+![Switch](./git_talk/doc/branch.gif) 
 
-    * It merges upstream changes by default, when it's really more polite to `rebase
-      over them <http://gitready.com/advanced/2009/02/11/pull-with-rebase.html>`__,
-      unless your collaborators enjoy a commit graph that looks like bedhead.
+## Graph
+1. display latest 20 activaties at branch level
 
-    * It only updates the branch you're currently on, which means git push will
-      shout at you for being behind on branches you don't particularly care about
-      right now.
-
-<pre>
-            (remote origin/master)
-     a--b--c  
-    /       \
- d--         \
-    \         \
-     e--f--g---h 
-              (local master)
-</pre>
+![Switch](./git_talk/doc/graph.gif) 
 
 
-#### git pull --rebase
-the rebase has copied the remote commits A--B--C and appended them to the local origin/master commit history.
+Many Thanks to:
 
-<pre>
-            (remote origin/master)
-     a--b--c  
-    /       
- d--         
-    \         
-     e--f--g--a--b--c 
-                    (local master)
-</pre>
-
-
-#### tagging
-Tags are ref's that point to specific points in Git history. Tagging is generally used to capture a point in history that is used for a marked version release (i.e. v1.0.1). A tag is like a branch that doesn’t change. Unlike branches, tags, after being created, have no further history of commits. \
-
-
-### rebase
-In our day-to-day git workflow, you have many topic (feature, issue) branches, like so:
-
-<pre>
-              i--j--k (branch-2)
-             /
-         g--h (branch-1)
-        /
- a--b--c (master)
-        \
-         d--e--f (branch-3)
-</pre>
-
-When you pull from upstream,
-
-<pre>
-              i--j--k (branch-2)
-             /
-         g--h (branch-1)
-        /
- a--b--c--x--y--z (master)
-        \
-         d--e--f (branch-3)
-</pre>
-
-You want to **rebase** all your topic branches on top of the new master:
-
-<pre>
-                        i'--j'--k' (branch-2)
-                       /
-                  g'--h' (branch-1)
-                 /
- a--b--c--x--y--z (master)
-                 \
-                  d'--e'--f' (branch-3)
-</pre>
-
-### Create PR
+https://github.com/Kamik423/cutie
+https://github.com/Michael-F-Bryan/auto-changelog
