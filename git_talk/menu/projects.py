@@ -55,7 +55,7 @@ def create_project(cc):
     cnt = 0
     
     user,password = '',''   
-    if (lib.cutie.prompt_yn("Do you use ssh connect to repository?")):
+    if (cutie.prompt_yn("Do you use ssh connect to repository?")):
         repo["connection-ssh"] = True
     else :
         repo["connection-ssh"] = False
@@ -75,7 +75,7 @@ def create_project(cc):
         else:
             cutie.cprint('error', "invalid url, must contain .git")
 
-    path = cutie.linux_path(lib.cutie.get_input(cc.value('project', 'path_message')))
+    path = cutie.linux_path(cutie.get_input(cc.value('project', 'path_message')))
     repo["path"] = path
     if not repo["connection-ssh"]:
         user = cutie.get_input(cc.value('project', 'user_message'))
@@ -107,10 +107,11 @@ def create_project(cc):
             else:
                 git_url_user_password = repo['url']
 
-            #command = ['git','clone', git_url_user_password ]
-            #b, _ = gfunc.subprocess_cmd(path,command)
-            b = gfunc.execute_git_command(
-                path, 'clone {0}'.format(git_url_user_password))
+            command = [['git','clone', git_url_user_password]]
+            b, _ = gfunc.subprocess_cmd(path,command)
+            # b = gfunc.execute_git_command(
+            #     path, 'clone {0}'.format(git_url_user_password))
+            
             created = True
             # else:
             #     if prompt_yn(cc.value('project','gitclone_existing').format(repo['url'],path)):

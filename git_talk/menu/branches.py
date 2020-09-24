@@ -13,14 +13,16 @@ def pick_branch(cc, repo):
     
     path = repo['path']
     cc.save("access","current_repo", repo["name"])
-    b = gfunc.execute_git_command(path, 'branch ')
+    command =[['git','branch']]
+    b,error = gfunc. subprocess_cmd(path, command)
     selected_branch = ''
     working_list = []
-    for ib in b:
-        if ib.strip().startswith('*'):
-            selected_branch = ib.strip().replace('*', '')
-        if ib.strip().replace('*', '') not in ('master', 'dev', 'release'):
-            working_list.append(ib)
+    for ib in b[0].split('\n'):
+        if ib.strip():
+            if ib.strip().startswith('*'):
+                selected_branch = ib.strip().replace('*', '')
+            if ib.strip().replace('*', '') not in ('master', 'dev', 'release'):
+                working_list.append(ib)
     create_b = cc.value("branch", "create_branch")
     working_list.append(create_b)
     delete_b = cc.value("branch", "close_branch")
@@ -52,13 +54,14 @@ def pick_branch(cc, repo):
                     else:
                         cutie.cprint('error', cc.value('git-talk', 'error'))
 
-                    # b = gfunc.execute_git_command(path, 'checkout {0}'.format(nb_from))
-                    # b = gfunc.execute_git_command(path, 'checkout -b {0}'.format(nb))
+                    # b = gfunc. subprocess_cmd(path, 'checkout {0}'.format(nb_from))
+                    # b = gfunc. subprocess_cmd(path, 'checkout -b {0}'.format(nb))
                 else:
                     cutie.cprint('alarm', cc.value(
                     'branch', 'existing_branch').fromat(nb))
         elif name == delete_b:
-            b, error = gfunc.subprocess_cmd(repo['path'], [["git", "branch"]])
+            command = [["git", "branch"]]
+            b, error = gfunc.subprocess_cmd(repo['path'], command)
             if error == 0:
                 ty = cutie.select_propmt(
                     cc.value('branch', 'close_picked'), b[0].split('\n')).strip()
@@ -75,19 +78,18 @@ def pick_branch(cc, repo):
                                     b, error = gfunc.subprocess_cmd(repo['path'], [["git", "push", "origin", "--delete",ty]])
                         else:
                             b, error = gfunc.subprocess_cmd(repo['path'], [["git", "push", "origin", "--delete",ty]])
-
         else:
             # checkout the branch
             if name != selected_branch:
-                bb = gfunc.execute_git_command(
-                    path, 'checkout {0}'.format(name))
-                if bb:
+                command =[['git','checkout', name]]
+                bb,error = gfunc. subprocess_cmd(path,command )
+                if error == 0:
                     cutie.cprint('info', cc.value(
                         'project', 'checkout').format(name))
                     selected_branch = name
                 else:
-                    cutie.cprint('info', cc.value(
-                        'project', 'checkout_error').format(name))
+                    cutie.cprint('error', bb + '------------\n error:', str(error))
+                    cutie.cprint('info', cc.value('project', 'checkout_error').format(name))
                     cutie.cprint('error', cc.value('git-talk', 'error'))
 
     repo['branch'] = selected_branch
@@ -131,7 +133,7 @@ def add_tag(cc, repo):
         changelog.main(repo = repo["path"], description=comment ,latest_version= version )
 
         # auto-changelog -p && git add CHANGELOG.md
-        command = [["git", "commit", "-am", "Others: version bump to: " + version], 
+        command = [["git","add","."],["git", "commit", "-m", "'Others: version bump to: " + version + "'"], 
                    ["git", "push", "origin","HEAD:master"]]
         b, error = gfunc.subprocess_cmd(repo['path'], command)
         #menu.bumper_changelog(cc,repo)
@@ -150,10 +152,10 @@ def add_tag(cc, repo):
 def branch_manager(cc, repo, path, action='list-all', name=''):
     # list all branch
     if action == 'list-all':
-        return gfunc.execute_git_command(path, 'branch ')
+        return gfunc. subprocess_cmd(path, [['git','branch']])
     # list working branch
     elif action == 'list-work':
-        return gfunc.execute_git_command(path, "branch | grep | grep 'hfx\|tsk'_* ")
+        return gfunc. subprocess_cmd(path, [['git',"branch | grep | grep 'hfx\|tsk'_* "]])
     # create branch
     elif action == 'create':
         pass

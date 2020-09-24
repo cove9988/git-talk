@@ -41,13 +41,17 @@ def git_graph(cc, repo, time):
 def git_simple(cc, repo):
     count = 0
     current_branch, remote_status = stts.current_status(repo)
-    c='checkout master'
-    result = gfunc.execute_git_command(repo["path"], c)
+    c=[['git', 'checkout', 'master']]
+    result = gfunc.subprocess_cmd(repo["path"], c)
 
-    c='log --graph --oneline --decorate -1000'
-    result = gfunc.execute_git_command(repo["path"], c)
+    c=[['git', 'log', '--graph', '--oneline', '--decorate', '-2000']]
+    result,error = gfunc.subprocess_cmd(repo["path"], c, display=False)
+    if error != 0:
+        cutie.cprint('error',result[0])
+        return 
+        
     cutie.color_print('WHITE','\n----------------------- Git Graph (last 20 branch level event)-----------------------')
-    for r in result:
+    for r in result[0].split('\n'):
         if count > 20:
             break
         if '*' in r:
@@ -65,8 +69,8 @@ def git_simple(cc, repo):
             cutie.color_print('WHITE',r)
             count += 1
     cutie.color_print('WHITE','\n----------------------- Git Graph             (end)          -----------------------\n')
-    c='checkout ' + current_branch
-    result = gfunc.execute_git_command(repo["path"], c)
+    c=[['git','checkout', current_branch]]
+    result,error = gfunc.subprocess_cmd(repo["path"], c)
 
 def string_filter(r):
     f = r'origin/\S*(, |\))'

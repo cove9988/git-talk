@@ -19,9 +19,10 @@ def current_status(repo):
     command = [["git","fetch","--all"],["git", "status", "-v", "-s", "-b"]]
     b, error = gfunc.subprocess_cmd(repo['path'], command, display=False)
     if error == 0:
-        #  result    ## dev...origin/dev [behind/head 2] or nothing if equal, not []
-        #            M git_talk/cmd.py --------> if head
-        #            blank line
+        #  result windows   ## dev...origin/dev [behind/head 2] or nothing if equal, not []
+        #                   M git_talk/cmd.py --------> if head
+        #                   blank line
+        
         rs = b[1].split("\n")
         for i, r in enumerate(rs):
             if i == 0:
@@ -40,4 +41,5 @@ def current_status(repo):
 
         return current_branch, remote_status
     else:
+        print(b)
         return "error", error

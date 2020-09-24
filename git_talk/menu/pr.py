@@ -12,8 +12,11 @@ def pr(cc, repo):
         cc.value('access', 'git_api'), cc.value('access', 'token'))
     gh.set_repo(repo['url'])
     current_b, status = stts.current_status(repo)
-    b = gfunc.execute_git_command(repo['path'], 'branch')
-    head = cutie.select_propmt(cc.value('pr', 'head'), b).replace('*', '')
+    command = [['git','branch']]
+    b, _ = gfunc.subprocess_cmd(repo['path'],command)
+    # b = gfunc.execute_git_command(repo['path'], 'branch')
+    br_list = b[0].split("\n")
+    head = cutie.select_propmt(cc.value('pr', 'head'), br_list).replace('*', '')
     head = head.strip()
     if head.startswith(repo["task"]):
         base = 'dev'
