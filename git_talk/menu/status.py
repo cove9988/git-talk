@@ -1,4 +1,5 @@
-import git_talk.lib as lib
+import git_talk.lib.gfunc as gfunc
+import git_talk.lib.cutie as cutie
 
 def get_repo_name(url='', path=''):
     repo_name = ''
@@ -14,9 +15,9 @@ def get_repo_name(url='', path=''):
 
 
 def current_status(repo):
-    # lib.cutie.cprint('wait', 'updating the git status...')
+    # cutie.cprint('wait', 'updating the git status...')
     command = [["git","fetch","--all"],["git", "status", "-v", "-s", "-b"]]
-    b, error = lib.gfunc.subprocess_cmd(repo['path'], command, display=False)
+    b, error = gfunc.subprocess_cmd(repo['path'], command, display=False)
     if error == 0:
         #  result    ## dev...origin/dev [behind/head 2] or nothing if equal, not []
         #            M git_talk/cmd.py --------> if head

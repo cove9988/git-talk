@@ -1,6 +1,8 @@
 import re
-import git_talk.lib as lib
-import git_talk.menu as menu
+import git_talk.lib.gfunc as gfunc
+import git_talk.lib.cutie as cutie
+
+import git_talk.menu.status as stts
 def gitflow(cc, repo):
     '''
     create gitflow structure
@@ -26,7 +28,7 @@ def gitflow(cc, repo):
     
     cmd = [["git", "hist", "--branches"]]
 
-    b, error = lib.gfunc.subprocess_cmd(repo['path'], cmd)
+    b, error = gfunc.subprocess_cmd(repo['path'], cmd)
     # print(b)
 
 def git_graph(cc, repo, time):
@@ -38,33 +40,33 @@ def git_graph(cc, repo, time):
 
 def git_simple(cc, repo):
     count = 0
-    current_branch, remote_status = menu.current_status(repo)
+    current_branch, remote_status = stts.current_status(repo)
     c='checkout master'
-    result = lib.gfunc.execute_git_command(repo["path"], c)
+    result = gfunc.execute_git_command(repo["path"], c)
 
     c='log --graph --oneline --decorate -1000'
-    result = lib.gfunc.execute_git_command(repo["path"], c)
-    lib.cutie.color_print('WHITE','\n----------------------- Git Graph (last 20 branch level event)-----------------------')
+    result = gfunc.execute_git_command(repo["path"], c)
+    cutie.color_print('WHITE','\n----------------------- Git Graph (last 20 branch level event)-----------------------')
     for r in result:
         if count > 20:
             break
         if '*' in r:
             if 'Merge pull request' in r: 
-                lib.cutie.color_print('GREEN',string_filter(r))
+                cutie.color_print('GREEN',string_filter(r))
                 count += 1            
             elif '(' in r :
-                lib.cutie.color_print('YELLOW', string_filter(r))
+                cutie.color_print('YELLOW', string_filter(r))
                 count += 1
             else:
                 pass
-                # lib.cutie.color_print('MAGENTA', string_filter(r))
+                # cutie.color_print('MAGENTA', string_filter(r))
                 # count += 1                
         else:
-            lib.cutie.color_print('WHITE',r)
+            cutie.color_print('WHITE',r)
             count += 1
-    lib.cutie.color_print('WHITE','\n----------------------- Git Graph             (end)          -----------------------\n')
+    cutie.color_print('WHITE','\n----------------------- Git Graph             (end)          -----------------------\n')
     c='checkout ' + current_branch
-    result = lib.gfunc.execute_git_command(repo["path"], c)
+    result = gfunc.execute_git_command(repo["path"], c)
 
 def string_filter(r):
     f = r'origin/\S*(, |\))'
