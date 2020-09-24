@@ -3,20 +3,9 @@ import configparser
 import shutil
 import json
 
-
-# cc = lib.config.conf('.git_talk.ini')
-
-# m = cc.value('repo_json','git-talk')
-# mm = json.loads(m)
-# mm["jira-link"] = "test"
-# mm["version"] = "1.0.1"
-# mmm = json.dumps(mm)
-# cc.save('repo_json','git-talk',mmm)
-
-
 class conf():
     def __init__(self, ini_file):
-        f = os.path.abspath('./git_talk/' + ini_file)
+        f = os.path.abspath('./git_talk/git_talk.ini')
         con_file = os.path.join(os.path.expanduser('~'), ini_file)
         if not os.path.exists(con_file):
             print('copy file to: ', con_file, ' from: ', f)
