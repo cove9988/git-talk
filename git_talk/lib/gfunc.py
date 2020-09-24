@@ -30,8 +30,10 @@ def subprocess_cmd(local_path, command, display=True):
     #commands = command.split(";")
     for n, c in enumerate(command):
         if display:
-            cmd = '-cmd-{0}->'.format(n) + ' '.join(c) 
+            cmd = '-CMD-{0}->'.format(n) + ' '.join(c) 
             cutie.color_print('YELLOW', cmd)
+        if os.name != 'nt':
+            c = ' '.join(c)
         output = subprocess.Popen(
             c, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         out, err = output.communicate()

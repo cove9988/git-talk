@@ -5,7 +5,7 @@ import json
 
 class conf():
     def __init__(self, ini_file):
-        f = os.path.abspath('./git_talk/git_talk.ini')
+        f = os.path.abspath('./git_talk/git_talk.ini' )
         con_file = os.path.join(os.path.expanduser('~'), ini_file)
         if not os.path.exists(con_file):
             print('copy file to: ', con_file, ' from: ', f)
