@@ -22,7 +22,10 @@ python setup.py develop
 ###### on any terminal run #####
 git-talk
 ```
-note: you need configure git token (must) and ssh connection (optional for better security)
+**note:** 
+you need configure git token (must) and ssh connection (optional for better security)
+you must have **dev** branch
+
 ### How to setup ssh and token
 setup [ssh](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh)
 
