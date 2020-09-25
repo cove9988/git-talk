@@ -8,10 +8,14 @@ def pr(cc, repo):
     base = ''
     cutie.cprint('wait', (cc.value('git-talk', 'wait')))
     cutie.cprint('', '')
+    tt = cc.value('access', 'token')
+    if len(tt) < 5:
+        cutie.cprint('error', 'invalid token, please config in .git_talk.ini correctly')
+        return
     gh = github_api.GitHubAPI(
         cc.value('access', 'git_api'), cc.value('access', 'token'))
     gh.set_repo(repo['url'])
-    current_b, status = stts.current_status(repo)
+    current_b, status = stts.current_status(cc, repo)
     command = [['git','branch']]
     b, _ = gfunc.subprocess_cmd(repo['path'],command)
     # b = gfunc.execute_git_command(repo['path'], 'branch')

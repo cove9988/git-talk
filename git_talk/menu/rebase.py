@@ -43,10 +43,10 @@ def rebase(cc, repo):
             break
     # merge master
     if error == 0:
-        git_pull = [["git", "checkout", "dev"], ["git", "merge", "master"], [
-            "git", "push"], ["git", "checkout", current_branch]]
+        command = [["git", "checkout", "dev"], ["git", "merge", "master"], [
+            "git", "push"], ["git", "checkout", current_branch],["git", "merge", "master"]]
     # ["git","merge","master"],["git", "push"]]
-        b, error = gfunc.subprocess_cmd(repo['path'], git_pull)
+        b, error = gfunc.subprocess_cmd(repo['path'], command)
 
     #print(remote_branches, local_branches)
     # cutie.cprint('info',cc.value('git-talk','error'))

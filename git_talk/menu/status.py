@@ -14,8 +14,8 @@ def get_repo_name(url='', path=''):
     return repo_name
 
 
-def current_status(repo):
-    # cutie.cprint('wait', 'updating the git status...')
+def current_status(cc, repo):
+    cutie.cprint('wait', 'updating the git status...')
     command = [["git","fetch","--all"],["git", "status", "-v", "-s", "-b"]]
     b, error = gfunc.subprocess_cmd(repo['path'], command, display=False)
     if error == 0:

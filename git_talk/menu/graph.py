@@ -40,7 +40,7 @@ def git_graph(cc, repo, time):
 
 def git_simple(cc, repo):
     count = 0
-    current_branch, remote_status = stts.current_status(repo)
+    current_branch, remote_status = stts.current_status(cc, repo)
     c=[['git', 'checkout', 'master']]
     result = gfunc.subprocess_cmd(repo["path"], c)
 

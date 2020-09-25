@@ -111,7 +111,7 @@ get VERSION from config. A.B.C, will tag on PR
 
 def add_tag(cc, repo):
     error = "no defined error"
-    current_branch, remote_status = stts.current_status(repo)
+    current_branch, remote_status = stts.current_status(cc,repo)
     command = [["git", "checkout", "master"]]
     b, error = gfunc.subprocess_cmd(repo['path'], command)
     #j = control_package(cc,repo["path"])
