@@ -1,4 +1,6 @@
 GitPython>=2.1.11
 readchar>=2.0.1
 PyGithub>=1.43.7
-jinja2 
+jinja2
+colorama
+click

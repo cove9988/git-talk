@@ -49,14 +49,12 @@ setuptools.setup(
     author_email='cove9988@gmail.com',
     license='MIT',
     keywords='git CLI, git daily chore, dialog style CLI, mulitiply repositories',
-    packages=setuptools.find_packages(),
     include_package_data=True,
-    package_data ={
-        "":[".git_talk.ini"],
-    },
+    packages=setuptools.find_packages(),
+    package_data={'':['*.jinja2', '*.ini']},
     install_requires=find_requirements(),
     python_requires='>=3.6',
-    entry_points={'console_scripts': ['git-talk=cmd:main']},
+    entry_points={'console_scripts': ['git-talk=git_talk.cmd:main']},
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
