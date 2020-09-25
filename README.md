@@ -24,6 +24,7 @@ git-talk
 ```
 **note:** 
 you need configure git token (must) and ssh connection (optional for better security)
+
 you must have **dev** branch
 
 ### How to setup ssh and token
