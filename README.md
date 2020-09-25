@@ -16,7 +16,7 @@ git-talk CLI is a dialog sytle commandline git tool, which help you to handle mo
 ```
 git clone https://github.customerlabs.com.au/s106916/git-talk.git
 cd git-talk/
-python -m pip install -r requirements.txt  --proxy http://iagproxy.auiag.corp:8080
+python -m pip install -r requirements.txt
 python setup.py develop
 
 ###### on any terminal run #####
