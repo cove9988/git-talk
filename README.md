@@ -4,7 +4,7 @@ git-talk CLI is a dialog sytle commandline git tool, which help you to handle mo
 1. It is able to manages mulitiply git reporisities in one place, reducing context switching and helping you focus on your development.
 2. git-talk uses git work flow. 
         All the task branch is created from branch dev.
-        Use tag based release in master with auto build change log (changelog.md)
+        Use tag based release in master with auto built change log (changelog.md)
         All commit with pre-build category: **New Features,Fixes,Performance improvements,Refactorings,Docs,Others** 
 3. If you just use it for daily git, you DONOT need any git commands. If you are a git expert, you can modify the .git_talk.ini file to run you own git commands
 
@@ -14,7 +14,7 @@ git-talk CLI is a dialog sytle commandline git tool, which help you to handle mo
 
 ### Installation
 ```
-git clone https://github.customerlabs.com.au/s106916/git-talk.git
+git clone https://www.github.com/cove9988/git-talk.git
 cd git-talk/
 python -m pip install -r requirements.txt
 python setup.py develop
